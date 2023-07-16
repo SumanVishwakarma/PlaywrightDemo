@@ -2,10 +2,10 @@
 const { test, expect } = require('@playwright/test');
 
 test('has title', async ({ page }) => {
-    await page.goto('/Sign/');
+    await page.goto('/');
 
     // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle(/hours/);
+    await expect(page).toHaveTitle(/Sign/);
 });
 
 test('get started link', async ({ page }) => {
