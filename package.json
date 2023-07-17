@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.36.1"
+    "@playwright/test": "^1.36.1",
+    "sonarqube-scanner": "^3.0.1"
   },
   "dependencies": {
     "sonarqube-scanner": "^3.0.1"
