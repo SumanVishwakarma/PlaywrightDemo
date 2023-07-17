@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sonar": "node sonarqube.js",
-    "format": "prettier --write \"**/*.{ts,tsx}\""
+    "sonar": "node sonarqube.js"
   },
   "keywords": [],
   "author": "",
