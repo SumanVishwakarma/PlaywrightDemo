@@ -4,6 +4,10 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+env:
+  BASE_BRANCH: ${{github.event.pull_request.base.ref}}
+  HEAD_BRANCH: ${{github.event.pull_request.head.ref}}
+  PR_ID: ${{github.event.number}}
 jobs:
 
   test:
@@ -15,9 +19,8 @@ jobs:
       with:
         node-version: 18
     - uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: 'https://sonar.anywhere.co'
+    - name: Run sonarqube
+      run: node sonarqube.js -s ${{ secrets.SONAR_TOKEN }}
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers

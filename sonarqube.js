@@ -1,33 +1,52 @@
 const scanner = require('sonarqube-scanner');
 
+const host = 'https://sonar.anywhere.co'
+
+
+const token = process.argv[3];
+
 const options = {
     'sonar.projectKey': 'PlaywrightDemo',
     'sonar.projectName': 'PlaywrightDemo',
-    'sonar.sources': 'server',
-    'sonar.tests': 'spec',
-    'sonar.test.inclusions': 'spec/**/*.test.jsx,src/**/*.spec.jsx,src/**/*.test.js,src/**/*.test.jsx',
-    'sonar.testExecutionReportPaths': 'test-report.xml',
-    //'sonar.eslint.reportPaths': 'eslint-report.json', //if your are using eslint reports then add or else ignore this.
+    'sonar.sourceEncoding': 'UTF-8',
+    //'sonar.sources': 'src',
+    'sonar.tests': 'tests/',
+    //  'sonar.exclusions': 'src/index.js, src/**/index.js, src/assets/**/*',
+    // 'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
+    //  'sonar.testExecutionReportPaths': 'test-report.xml',
 };
 
-if (process.env.CI) {
-    if (process.env.IS_PULL_REQUEST_MERGED === 'true') {
-        options['sonar.branch.name'] = process.env.BASE_BRANCH;
-    } else {
-        options['sonar.pullrequest.key'] = process.env.PR_ID;
-        options['sonar.pullrequest.base'] = process.env.BASE_BRANCH;
-        options['sonar.pullrequest.branch'] = process.env.HEAD_BRANCH;
+const setupOptionsForReleaseScan = (baseBranch) => {
+    options['sonar.branch.name'] = baseBranch;
+};
+
+const setupOptionsForPRScan = (prID, baseBranch, headBranch) => {
+    options['sonar.pullrequest.key'] = prID;
+    options['sonar.pullrequest.base'] = baseBranch;
+    options['sonar.pullrequest.branch'] = headBranch;
+};
+
+const setupOptionsForScan = () => {
+    if (process.env.CI) {
+        if (process.env.GITHUB_WORKFLOW === 'PR Validation') {
+            setupOptionsForPRScan(
+                process.env.PR_ID,
+                process.env.BASE_BRANCH,
+                process.env.HEAD_BRANCH
+            );
+        } else {
+            setupOptionsForReleaseScan('main');
+        }
     }
-} else {
-    const getCurrentBranchName = require('node-git-current-branch');
-    options['sonar.branch.name'] = getCurrentBranchName();
-}
+};
 
-scanner({
-    serverUrl: 'https://sonar.anywhere.co', // hosted url for sonar 
-    token: '${{ secrets.SONAR_TOKEN }}', // your project token
-    options,
-},
+setupOptionsForScan();
 
-    () => process.exit(),
+scanner(
+    {
+        serverUrl: host,
+        token,
+        options,
+    },
+    () => process.exit()
 );

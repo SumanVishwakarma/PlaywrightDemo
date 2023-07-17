@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "sonar": "node sonarqube.js",
+    "format": "prettier --write \"**/*.{ts,tsx}\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
