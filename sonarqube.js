@@ -1,8 +1,8 @@
 const scanner = require('sonarqube-scanner');
 
 const options = {
-    'sonar.projectKey': 'timezone-automation',
-    'sonar.projectName': 'timezone-automation',
+    'sonar.projectKey': 'PlaywrightDemo',
+    'sonar.projectName': 'PlaywrightDemo',
     'sonar.sources': 'server',
     'sonar.tests': 'spec',
     'sonar.test.inclusions': 'spec/**/*.test.jsx,src/**/*.spec.jsx,src/**/*.test.js,src/**/*.test.jsx',
