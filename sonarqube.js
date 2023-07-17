@@ -28,7 +28,7 @@ const setupOptionsForPRScan = (prID, baseBranch, headBranch) => {
 
 const setupOptionsForScan = () => {
     if (process.env.CI) {
-        if (process.env.GITHUB_WORKFLOW === 'PR Validation') {
+        if (process.env.GITHUB_WORKFLOW === 'Playwright Tests') {
             setupOptionsForPRScan(
                 process.env.PR_ID,
                 process.env.BASE_BRANCH,
