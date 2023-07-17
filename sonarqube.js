@@ -1,4 +1,4 @@
-import scanner from 'sonarqube-scanner';
+const scanner = require('sonarqube-scanner');
 
 const host = 'https://sonar.anywhere.co'
 
