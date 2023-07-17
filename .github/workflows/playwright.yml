@@ -18,7 +18,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - uses: sonarsource/sonarqube-scan-action@master
     - name: Run sonarqube
       run: node sonarqube.js -s ${{ secrets.SONAR_TOKEN }}
     - name: Install dependencies
